@@ -35,9 +35,9 @@ createDynamic(){
   echo ' -----------------------------------------------------------------------------------------'
   echo -e $YELLOW
 
-  read -p " Please provide the Service's Name (No Spaces) [ example: TravelBlog ]: " SERVICENAME
-  read -p " Please provide the URL of the subdomain to listen for [ example: blog.travel.com ]: " URL
-  read -p " Please provide the URL of the backend server: [ example: http://<ip> or http://<ip>:<port> ] " BACKEND
+  read -p " Please provide the Service's Name (No Spaces) [ e.g. TravelBlog ]: " SERVICENAME
+  read -p " Please provide the URL of the subdomain to listen for [ e.g. blog.travel.com ]: " URL
+  read -p " Please provide the URL of the backend server: [ e.g. http://<ip> or http://<ip>:<port> ] " BACKEND
 
   echo "#################################" > /etc/traefik/dynamics/$SERVICENAME.yaml
   echo "# $SERVICENAME Dynamic Configuration" >> /etc/traefik/dynamics/$SERVICENAME.yaml
@@ -66,6 +66,15 @@ createDynamic(){
   echo "        servers:" >> /etc/traefik/dynamics/$SERVICENAME.yaml
   echo "        - url: \"$BACKEND\"" >> /etc/traefik/dynamics/$SERVICENAME.yaml
 
+  read -p "Do you need to add another backend url (for load balancing) ? [y/n] " ADD
+
+  while [ $ADD == 'Y' ] || [ $ADD == 'y' ]
+  do
+    read -p "Please provide the URL of the additional backend server [ e.g. http://<ip> or http://<ip>:<port> ]: " BACKEND
+    echo "        - url: \"$BACKEND\"" >> /etc/traefik/dynamics/$SERVICENAME.yaml
+    read -p "Do you need to add another backend url (for load balancing) ? [y/n] " ADD
+  done
+
   echo
   echo -e $GREEN "New service definition created!"
   echo " File is located here: /etc/traefik/dynamics/$SERVICENAME.yaml"
@@ -80,7 +89,7 @@ deleteDynamic(){
   showHeader deleteDynamic
   
   echo -e $YELLOW
-  read -p " Please provide the name of the Service to delete (No Spaces) [ example: TravelBlog ]: " SERVICENAME
+  read -p " Please provide the name of the Service to delete (No Spaces) [ e.g. TravelBlog ]: " SERVICENAME
 
   if [ ! -f /etc/traefik/dynamics/$SERVICENAME.yaml ]; then
     echo -e $RED
