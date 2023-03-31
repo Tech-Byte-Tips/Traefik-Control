@@ -66,13 +66,13 @@ createDynamic(){
   echo "        servers:" >> /etc/traefik/dynamics/$SERVICENAME.yaml
   echo "        - url: \"$BACKEND\"" >> /etc/traefik/dynamics/$SERVICENAME.yaml
 
-  read -p "Do you need to add another backend url (for load balancing) ? [y/n] " ADD
+  read -p " Do you need to add another backend url (for load balancing) ? [y/n] " ADD
 
   while [ $ADD == 'Y' ] || [ $ADD == 'y' ]
   do
-    read -p "Please provide the URL of the additional backend server [ e.g. http://<ip> or http://<ip>:<port> ]: " BACKEND
+    read -p " Please provide the URL of the additional backend server [ e.g. http://<ip> or http://<ip>:<port> ]: " BACKEND
     echo "        - url: \"$BACKEND\"" >> /etc/traefik/dynamics/$SERVICENAME.yaml
-    read -p "Do you need to add another backend url (for load balancing) ? [y/n] " ADD
+    read -p " Do you need to add another backend url (for load balancing) ? [y/n] " ADD
   done
 
   echo
