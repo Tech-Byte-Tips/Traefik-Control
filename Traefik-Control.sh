@@ -141,6 +141,11 @@ installTraefik(){
     exit 1
   fi
 
+  echo
+  echo -e $MAGENTA "Removing unused packages ..." $BLACK
+  echo
+  apt-get autoremove -y > /dev/null & showSpinner
+  echo
 
   ################### Part 2 - Create File Structure ###################
 
