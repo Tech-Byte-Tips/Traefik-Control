@@ -173,7 +173,15 @@ installTraefik(){
       echo -e $RED "[!] An error occurred while creating the /etc/traefik/traefik.yaml file!" $BLACK
       exit 1
     fi
-  fi  
+  fi
+  if [ ! -f /etc/traefik/traefik.log ]; then
+    touch /etc/traefik/traefik.log
+    chmod 0777 /etc/traefik/traefik.log
+    if [ $? -ne 0 ]; then
+      echo -e $RED "[!] An error occurred while creating the /etc/traefik/traefik.log file!" $BLACK
+      exit 1
+    fi
+  fi 
   if [ ! -f /etc/traefik/acme.json ]; then
     touch /etc/traefik/acme.json
     if [ $? -ne 0 ]; then
